@@ -1,0 +1,93 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            IntNode head = createlist(50);
+            Console.WriteLine(NodeListSum(head));
+            Console.WriteLine(NodeListamout(head));
+            Console.WriteLine(NodeListAvg(head));
+            int[] arr = new int[] { 1, 2, 3, 4, 5, 6 };
+            IntNode node = ArrToNodeList(arr);
+            Console.WriteLine(NodeListSum(node));
+            Console.WriteLine(NodeListMaxNode(node));
+
+
+        }
+        public static int NodeListSum(IntNode node, int sum = 0)
+        {
+            if (node.next == null)
+                return sum;
+            return NodeListSum(node.next, sum + node.value);
+        }
+        public static int NodeListamout(IntNode node, int count = 0)
+        {
+            if (node.next == null)
+                return count;
+            return NodeListamout(node.next, count + 1);
+        }
+        public static int NodeListAvg(IntNode node, int sum = 0,int count = 0)
+        {
+            if (node.next == null)
+                return sum/count;
+            return NodeListAvg(node.next, sum + node.value,count + 1);
+        }
+        public static int NodeListMax(IntNode node, int max = int.MinValue)
+        {
+            if (node.next == null)
+                return max;
+            return NodeListMax(node.next,Math.Max(max,node.value));
+        }
+        public static IntNode NodeListMaxNode(IntNode node, int max = int.MinValue,IntNode maxNode = null)
+        {
+            if (node.next == null)
+                return maxNode;
+            if (max < node.value)
+                return NodeListMaxNode(node.next, node.value,node);
+            else
+                return NodeListMaxNode(node.next, max, maxNode);
+        }
+        public static bool DoesExist(IntNode node, int value)
+        {
+            if (node.value == value) return true;
+            if (node.next == null) return false;
+            return DoesExist(node.next, value);
+        }
+        public static IntNode ArrToNodeList(int[] arr,IntNode node = null, int i = 0)
+        {
+            if (arr.Length <= i) return node;
+            return ArrToNodeList(arr, new IntNode(arr[i],node),i + 1);
+        }
+
+
+
+        public static IntNode createlist(int size)
+        {
+            IntNode node = null;
+            for(int i = size; i > 0;i--)
+            {
+                node = new IntNode(i, node);
+            }
+            return node;
+        }
+    }
+    class IntNode
+    {
+        public int value;
+        public IntNode next;
+        public IntNode(int value, IntNode next)
+        {
+            this.value = value;
+            this.next = next;
+        }
+    }
+}
+
+
