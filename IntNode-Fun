@@ -21,6 +21,36 @@ namespace ConsoleApp2
 
 
         }
+        static IntNode BreakChain(IntNode head)
+        {
+            IntNode reformedChain = null;
+            IntNode node = head;
+            int maxValue = 1;
+            int minValue = 1000;
+            while (node != null)
+            {
+                minValue = Math.Min(node.value, minValue);
+                minValue = Math.Max(node.value, maxValue);
+                if (node.next.value != 0)
+                {
+                    if (reformedChain == null)
+                    {
+                        reformedChain = new IntNode(maxValue, null);
+                        reformedChain = new IntNode(minValue, reformedChain);
+                    }
+                    else
+                    {
+                        reformedChain = new IntNode(maxValue, reformedChain);
+                        reformedChain = new IntNode(minValue, reformedChain);
+                    }
+                    maxValue = 1;
+                    minValue = 1000;
+                }
+                node = node.next;
+            }
+            return reformedChain;
+        }
+
         public static int NodeListSum(IntNode node, int sum = 0)
         {
             if (node.next == null)
